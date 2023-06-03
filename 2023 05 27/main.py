@@ -1,5 +1,7 @@
 import tkinter as tk
 from tkinter import colorchooser
+import PIL.ImageGrab as ImageGrab
+from tkinter import filedialog
 
 w = tk.Tk()
 w.geometry("1000x600")
@@ -67,26 +69,39 @@ def set_eraser():
 def clear_canvas():
     c.create_rectangle(0,0, c['width'], c['height'], fill=fill_color.get(), width=0)
 
+def save_picture():
+    # TODO: розібратися з розмірами
+    x = w.winfo_x()+50
+    y = w.winfo_y() + 200
+    fileLocation = filedialog.asksaveasfilename(defaultextension="jpg")
+    img = ImageGrab.grab(bbox=(x, y, x+1100, y+600))
+    img.save(fileLocation)
+
+
 fr1 = tk.Frame(w, width=1000, height=100, bg="lightgray")
-fr1.pack()
-pencil = tk.Button(fr1, text="Олівець", command=set_pencil)
+fr1.pack(fill="y")
+fr1.pack_propagate(0)
+pencil = tk.Button(fr1, text="Олівець", width=13, command=set_pencil)
 pencil.pack(side="left", fill="y")
-eraser = tk.Button(fr1, text="Гумка", command=set_eraser)
+eraser = tk.Button(fr1, text="Гумка", width=13, command=set_eraser)
 eraser.pack(side="left", fill="y")
-color_picker = tk.Button(fr1, text="Вибір кольору", command=pick_color)
+color_picker = tk.Button(fr1, text="Вибір кольору", width=13, command=pick_color)
 color_picker.pack(side="left", fill="y")
-rectangle = tk.Button(fr1, text="Прямокутник", command=set_rect)
+rectangle = tk.Button(fr1, text="Прямокутник", width=13, command=set_rect)
 rectangle.pack(side="left", fill="y")
-oval = tk.Button(fr1, text="Овал", command=set_oval)
+oval = tk.Button(fr1, text="Овал", width=13, command=set_oval)
 oval.pack(side="left", fill="y")
-triangle = tk.Button(fr1, text="Трикутник", command=set_triangle)
+triangle = tk.Button(fr1, text="Трикутник", width=13, command=set_triangle)
 triangle.pack(side="left", fill="y")
-clear = tk.Button(fr1, text="Очистити", command=clear_canvas)
+clear = tk.Button(fr1, text="Очистити", width=13, command=clear_canvas)
 clear.pack(side="left", fill="y")
-sc = tk.Scale(fr1, from_ = 1, to = 50, orient="horizontal")
+sc = tk.Scale(fr1, from_ = 1, to = 50, length=180, orient="horizontal")
 sc.pack(side="left", fill="y")
 leave = tk.Button(fr1, text="Вихід", command=exit)
 leave.pack(side="right", fill="y")
+save = tk.Button(fr1, text="Зберегти", command=save_picture)
+save.pack(side="right", fill="y")
+
 fr2 = tk.Frame(w, width=1000, height=500)
 fr2.pack()
 
